@@ -19,15 +19,16 @@ public class UserController {
     //When a WebSocket client sends a message to the destination /user.addUser, this method (addUser) will be invoked.
     @MessageMapping("/user.addUser")
     //After processing the WebSocket message, the result (in this case, the User object) will be sent to the WebSocket topic /user/topic.
-    @SendTo("/user/topic")
+    @SendTo("/user/public")
     //The incoming WebSocket message's payload will be automatically converted and bound to the User object.
     public User addUser(@Payload User user) {
+        //save to repo
         service.saveUser(user);
         return user;
     }
 
     @MessageMapping("/user.disconnectUser")
-    @SendTo("/user.topic")
+    @SendTo("/user/public")
     public User disconnect(@Payload User user) {
         service.disconnect(user);
         return user;

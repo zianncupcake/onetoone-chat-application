@@ -27,7 +27,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
         // set application destination prefixes to be /app
         registry.setApplicationDestinationPrefixes("/app");
         //set destination prefix to /user
-        registry.setUserDestinationPrefix("/user");
+        registry.setUserDestinationPrefix(("/user"));
     }
 
     //register stomp endpoints

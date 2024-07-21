@@ -18,10 +18,15 @@ public class ChatController {
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatMessageService chatMessageService;
 
+    //handles messages sent to the /chat destination
+    //chatMessage parameter should be bound to the payload of the incoming message
     @MessageMapping("/chat")
+    //why payload? when a message is sent it includes headers(optional) and payload. payload annotation means actual content of message deserialised into sepcific parameter type
     public void processMessage(@Payload ChatMessage chatMessage) {
         ChatMessage savedMsg = chatMessageService.save(chatMessage);
         //john will be subscribed to the queue john/queue/messages
+        //send the message to john's queue
+        //create notification
         messagingTemplate.convertAndSendToUser(
             chatMessage.getRecepientId(), 
             "/queue/messages", 
